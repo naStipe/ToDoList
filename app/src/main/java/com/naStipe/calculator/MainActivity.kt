@@ -35,9 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         myAdapter.setListOfToDos(listOfToDos)
         listOfToDosView.adapter = myAdapter
-
-
-
     }
 
     class MyAdapter(private val context: Context) : RecyclerView.Adapter<MyViewHolder> (){
