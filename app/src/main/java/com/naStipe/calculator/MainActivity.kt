@@ -1,10 +1,9 @@
-
-
 package com.naStipe.calculator
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         listOfToDosView.adapter = myAdapter
     }
 
-    class MyAdapter(private val context: Context) : RecyclerView.Adapter<MyViewHolder> (){
+    class MyAdapter(private val context: Context) : RecyclerView.Adapter<MyViewHolder>() {
         val listOfToDos = mutableListOf<String>()
         fun setListOfToDos(items: Collection<String>) {
             listOfToDos.clear()
@@ -62,18 +61,19 @@ class MainActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.textView.text = listOfToDos[position]
-            holder.textView.setOnLongClickListener {
-                val oldVisibility = holder.deleteButton.visibility
-                if (oldVisibility == View.VISIBLE) {
-                    holder.deleteButton.visibility = View.GONE
-                } else {
-                    holder.deleteButton.visibility = View.VISIBLE
-                }
+            holder.textView.setOnCreateContextMenuListener { menu, v, menuInfo ->
 
-
-                return@setOnLongClickListener true
+                menu?.add(Menu.NONE, 1, 1, "Delete")
+                        ?.setOnMenuItemClickListener {
+                            removeItemAt(position)
+                            return@setOnMenuItemClickListener true
+                        }
             }
+        }
 
+        private fun removeItemAt(position: Int) {
+            listOfToDos.removeAt(position)
+            notifyDataSetChanged()
         }
     }
 
