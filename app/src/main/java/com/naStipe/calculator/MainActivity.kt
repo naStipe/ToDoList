@@ -14,11 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+
+    val prefs: PersistentModule = PrefsModule(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val listOfToDos = mutableListOf<String>("Item 1", "Item 2", "Item 3")
+        val listOfToDos: MutableSet<String> = prefs.getItems()
 
         val listOfToDosView: RecyclerView = findViewById(R.id.listOfToDos)
 
@@ -28,8 +31,12 @@ class MainActivity : AppCompatActivity() {
 
         val myEditText = findViewById<EditText>(R.id.editText)
 
+
         myButton.setOnClickListener {
             myAdapter.listOfToDos.add(myEditText.text.toString())
+
+            prefs.addItem(myEditText.text.toString())
+
             myAdapter.notifyDataSetChanged()
         }
 
