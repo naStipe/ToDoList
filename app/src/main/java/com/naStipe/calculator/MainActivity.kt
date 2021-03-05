@@ -15,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    val prefs: PersistentModule = PrefsModule(this)
+    lateinit var prefs: PersistentModule
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        prefs = PrefsModule(this)
 
         val listOfToDos: MutableSet<String> = prefs.getItems()
 
