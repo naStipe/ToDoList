@@ -2,6 +2,8 @@ package com.naStipe.calculator
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -59,6 +61,13 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnLongClickListener false
         }
+
+
+        // так мы создаем/получаем новый поток
+        // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        Thread {
+            // здесь то, что будет выполняться в новом треде
+        }.start()
 
         myAdapter.setListOfToDos(listOfToDos)
         listOfToDosView.adapter = myAdapter
