@@ -8,5 +8,7 @@ import androidx.room.PrimaryKey
 data class ToDoItem(
     @ColumnInfo(name = "value") var value: String
 ) {
-    @PrimaryKey(autoGenerate = true) var index: Int = 0
+    @PrimaryKey(autoGenerate = true) var index: Int = 0 /* <-- это уникальный индекс объекта в базе
+                                                            данных; благодаря параметру autoGenerate,
+                                                            он будет сгенерирован автоматически */
 }

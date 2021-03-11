@@ -26,7 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         prefs = DatabaseModule(this)
 
-        val listOfToDos: Collection<String> = prefs.getItems()
+        val listOfToDos: Collection<String> = prefs.getItems() /* <-- это не сработает в случае с
+                                                                    базой данных; так как операция
+                                                                    может занять долгое количество
+                                                                    времени, мы не хотим блокировать
+                                                                    UI thread чтобы избежать
+                                                                    freeze'ов приложения */
 
         val listOfToDosView: RecyclerView = findViewById(R.id.listOfToDos)
 
@@ -40,7 +45,12 @@ class MainActivity : AppCompatActivity() {
         myButton.setOnClickListener {
             myAdapter.listOfToDos.add(myEditText.text.toString())
 
-            prefs.addItem(myEditText.text.toString())
+            prefs.addItem(myEditText.text.toString()) /*        <-- это не сработает в случае с
+                                                                    базой данных; так как операция
+                                                                    может занять долгое количество
+                                                                    времени, мы не хотим блокировать
+                                                                    UI thread чтобы избежать
+                                                                    freeze'ов приложения */
 
             myAdapter.notifyDataSetChanged()
         }
@@ -74,7 +84,6 @@ class MainActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.textView.text = listOfToDos[position]
             holder.textView.setOnCreateContextMenuListener { menu, v, menuInfo ->
-
                 menu?.add(Menu.NONE, 1, 1, "Delete")
                         ?.setOnMenuItemClickListener {
                             removeItemAt(position)
