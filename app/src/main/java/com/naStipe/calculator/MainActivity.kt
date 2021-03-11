@@ -28,13 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         prefs = DatabaseModule(this)
 
-        val listOfToDos: Collection<String> = prefs.getItems() /* <-- это не сработает в случае с
-                                                                    базой данных; так как операция
-                                                                    может занять долгое количество
-                                                                    времени, мы не хотим блокировать
-                                                                    UI thread чтобы избежать
-                                                                    freeze'ов приложения */
-
         val listOfToDosView: RecyclerView = findViewById(R.id.listOfToDos)
 
         val myAdapter = MyAdapter(this)
@@ -67,9 +60,13 @@ class MainActivity : AppCompatActivity() {
         // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         Thread {
             // здесь то, что будет выполняться в новом треде
+
+            // теперь мы можем вызывать prefs.getItems(), потому что мы уже
+            // не в UI thread'e (a.k.a. main thread)
+            val listOfToDos: Collection<String> = prefs.getItems()
+            myAdapter.setListOfToDos(listOfToDos)
         }.start()
 
-        myAdapter.setListOfToDos(listOfToDos)
         listOfToDosView.adapter = myAdapter
     }
 
