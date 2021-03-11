@@ -40,12 +40,7 @@ class MainActivity : AppCompatActivity() {
         myButton.setOnClickListener {
             myAdapter.listOfToDos.add(myEditText.text.toString())
 
-            prefs.addItem(myEditText.text.toString()) /*        <-- это не сработает в случае с
-                                                                    базой данных; так как операция
-                                                                    может занять долгое количество
-                                                                    времени, мы не хотим блокировать
-                                                                    UI thread чтобы избежать
-                                                                    freeze'ов приложения */
+            addItemToPersistentStorage(myEditText.text.toString())
 
             myAdapter.notifyDataSetChanged()
         }
@@ -59,6 +54,12 @@ class MainActivity : AppCompatActivity() {
         fetchItemsFromPersistentStorage()
 
         listOfToDosView.adapter = myAdapter
+    }
+
+    private fun addItemToPersistentStorage(newItem: String) {
+        Thread {
+            prefs.addItem(newItem)
+        }.start()
     }
 
     private fun fetchItemsFromPersistentStorage() {
