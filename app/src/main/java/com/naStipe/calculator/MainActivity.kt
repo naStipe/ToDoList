@@ -55,7 +55,13 @@ class MainActivity : AppCompatActivity() {
             return@setOnLongClickListener false
         }
 
+        // для читаемости выделим это действие в отдельную функцию
+        fetchItemsFromPersistentStorage()
 
+        listOfToDosView.adapter = myAdapter
+    }
+
+    private fun fetchItemsFromPersistentStorage() {
         // так мы создаем/получаем новый поток
         // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         Thread {
@@ -66,8 +72,6 @@ class MainActivity : AppCompatActivity() {
             val listOfToDos: Collection<String> = prefs.getItems()
             myAdapter.setListOfToDos(listOfToDos)
         }.start()
-
-        listOfToDosView.adapter = myAdapter
     }
 
     class MyAdapter(private val context: Context) : RecyclerView.Adapter<MyViewHolder>() {
