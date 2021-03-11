@@ -3,6 +3,7 @@ package com.naStipe.calculator
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import androidx.core.content.edit
+import java.lang.annotation.Inherited
 
 const val STRING_SET = "String_Set"
 

@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.naStipe.calculator.db.DatabaseModule
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,9 +24,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        prefs = PrefsModule(this)
+        prefs = DatabaseModule(this)
 
-        val listOfToDos: MutableSet<String> = prefs.getItems()
+        val listOfToDos: Collection<String> = prefs.getItems()
 
         val listOfToDosView: RecyclerView = findViewById(R.id.listOfToDos)
 
