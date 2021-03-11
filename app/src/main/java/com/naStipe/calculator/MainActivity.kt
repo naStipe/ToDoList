@@ -70,7 +70,9 @@ class MainActivity : AppCompatActivity() {
             // теперь мы можем вызывать prefs.getItems(), потому что мы уже
             // не в UI thread'e (a.k.a. main thread)
             val listOfToDos: Collection<String> = prefs.getItems()
-            myAdapter.setListOfToDos(listOfToDos)
+            myAdapter.setListOfToDos(listOfToDos) /*<-- здесь адаптер не видно; надо вынести
+                                                    переменную из onCreate в тело класса (см. след.
+                                                    коммит)*/
         }.start()
     }
 
