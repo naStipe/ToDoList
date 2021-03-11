@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var prefs: PersistentModule
 
+    private val myAdapter = MyAdapter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -29,8 +31,6 @@ class MainActivity : AppCompatActivity() {
         prefs = DatabaseModule(this)
 
         val listOfToDosView: RecyclerView = findViewById(R.id.listOfToDos)
-
-        val myAdapter = MyAdapter(this)
 
         val myButton = findViewById<ImageButton>(R.id.addItemButton)
 
@@ -70,9 +70,7 @@ class MainActivity : AppCompatActivity() {
             // теперь мы можем вызывать prefs.getItems(), потому что мы уже
             // не в UI thread'e (a.k.a. main thread)
             val listOfToDos: Collection<String> = prefs.getItems()
-            myAdapter.setListOfToDos(listOfToDos) /*<-- здесь адаптер не видно; надо вынести
-                                                    переменную из onCreate в тело класса (см. след.
-                                                    коммит)*/
+            myAdapter.setListOfToDos(listOfToDos) /*<-- теперь видно! */
         }.start()
     }
 
